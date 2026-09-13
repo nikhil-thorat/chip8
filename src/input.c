@@ -12,68 +12,90 @@ void InputInit(Input *input)
     }
     memset(input->keys, 0, sizeof(input->keys));
 }
-
 void InputPollTerminal(Input *input)
 {
     if (input == NULL)
     {
         return;
     }
-    memset(input->keys, 0, sizeof(input->keys));
+
+    static int key_timers[18] = {0};
+
+    for (int i = 0; i < 18; i++)
+    {
+        if (key_timers[i] > 0)
+        {
+            key_timers[i]--;
+            if (key_timers[i] == 0)
+            {
+                input->keys[i] = false;
+            }
+        }
+    }
 
     char c;
     while (read(STDIN_FILENO, &c, 1) > 0)
     {
+        int k = -1;
         switch (c)
         {
         case '1':
-            input->keys[0x1] = true;
+            k = 0x1;
             break;
         case '2':
-            input->keys[0x2] = true;
+            k = 0x2;
             break;
         case '3':
-            input->keys[0x3] = true;
+            k = 0x3;
             break;
         case '4':
-            input->keys[0xC] = true;
+            k = 0xC;
             break;
         case 'q':
-            input->keys[0x4] = true;
+            k = 0x4;
             break;
         case 'w':
-            input->keys[0x5] = true;
+            k = 0x5;
             break;
         case 'e':
-            input->keys[0x6] = true;
+            k = 0x6;
             break;
         case 'r':
-            input->keys[0xD] = true;
+            k = 0xD;
             break;
         case 'a':
-            input->keys[0x7] = true;
+            k = 0x7;
             break;
         case 's':
-            input->keys[0x8] = true;
+            k = 0x8;
             break;
         case 'd':
-            input->keys[0x9] = true;
+            k = 0x9;
             break;
         case 'f':
-            input->keys[0xE] = true;
+            k = 0xE;
             break;
         case 'z':
-            input->keys[0xA] = true;
+            k = 0xA;
             break;
         case 'x':
-            input->keys[0x0] = true;
+            k = 0x0;
             break;
         case 'c':
-            input->keys[0xB] = true;
+            k = 0xB;
             break;
         case 'v':
-            input->keys[0xF] = true;
+            k = 0xF;
             break;
+        case 27:
+            k = 16;
+            break;
+        }
+
+        if (k != -1)
+        {
+            input->keys[k] = true;
+            key_timers[k] = 75;
         }
     }
 }
