@@ -3,6 +3,7 @@
 #ifndef CPU
 #define CPU
 
+#include "audio.h"
 #include "display.h"
 #include "input.h"
 #include "memory.h"
@@ -23,9 +24,10 @@ typedef struct
     Memory *memory;
     Display *display;
     Input *input;
+    Audio *audio;
 } Cpu;
 
-void CpuInit(Cpu *cpu, Memory *memory, Display *display, Input *input);
+void CpuInit(Cpu *cpu, Memory *memory, Display *display, Input *input, Audio *audio);
 void CpuCycle(Cpu *cpu);
 void CpuTickTimers(Cpu *cpu);
 
