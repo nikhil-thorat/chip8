@@ -29,7 +29,7 @@ void DisplayRender(Display *display)
         return;
     }
 
-    printf("\e[1;1H");
+    printf("\e[1;1H\e[0m");
 
     for (int y = 0; y < DISPLAY_HEIGHT; y += 2)
     {
@@ -55,7 +55,7 @@ void DisplayRender(Display *display)
                 printf(" ");
             }
         }
-        printf("\n");
+        printf("\r\n");
     }
 
     display->draw_flag = false;
