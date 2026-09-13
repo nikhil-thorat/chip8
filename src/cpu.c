@@ -1,4 +1,5 @@
 #include "cpu.h"
+#include "display.h"
 
 #include <stdint.h>
 #include <stdio.h>
@@ -50,8 +51,7 @@ void CpuCycle(Cpu *cpu)
         switch (NN)
         {
         case 0xE0:
-            memset(cpu->display->pixels, 0, sizeof(cpu->display->pixels));
-            cpu->display->draw_flag = true;
+            DisplayClear(cpu->display);
             break;
         case 0xEE:
             cpu->SP -= 1;

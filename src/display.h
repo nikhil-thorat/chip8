@@ -15,6 +15,7 @@ typedef struct
 } Display;
 
 void DisplayInit(Display *display);
+void DisplayRender(Display *display);
 void DisplayClear(Display *display);
 
 #endif /* DISPLAY */
