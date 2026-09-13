@@ -233,7 +233,7 @@ void CpuCycle(Cpu *cpu)
         case 0x1E:
             cpu->IR += cpu->V[X];
             break;
-        case 0x0A:
+        case 0x0A: {
             bool pressed = false;
             for (int i = 0; i < sizeof(cpu->input->keys); i++)
             {
@@ -250,6 +250,7 @@ void CpuCycle(Cpu *cpu)
                 cpu->PC -= 2;
             }
             break;
+        }
         case 0x29:
             cpu->IR = cpu->V[X] * 5;
             break;
