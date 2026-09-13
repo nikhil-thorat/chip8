@@ -58,7 +58,7 @@ int MemoryLoadROM(Memory *memory, const char *filepath)
 
     fseek(file, 0, SEEK_SET);
 
-    size_t bytes_read = fread(memory->bytes + ROM_START, 1, file_size, file);
+    size_t bytes_read = fread(&memory->bytes[ROM_START], 1, sizeof(memory->bytes) - ROM_START, file);
     if (bytes_read != (size_t)file_size)
     {
         fprintf(stderr, "ERROR : File size %ld, bytes read %zu\n", file_size, bytes_read);
