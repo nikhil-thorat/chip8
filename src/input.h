@@ -7,7 +7,7 @@
 
 typedef struct
 {
-    bool keys[18];
+    bool keys[16];
 } Input;
 
 void InputInit(Input *input);
