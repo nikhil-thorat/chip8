@@ -1,4 +1,5 @@
 #include "cpu.h"
+#include "audio.h"
 #include "display.h"
 
 #include <stdint.h>
@@ -293,12 +294,10 @@ void CpuTickTimers(Cpu *cpu)
     if (cpu->sound_timer > 0)
     {
         cpu->sound_timer--;
-        if (cpu->sound_timer > 0)
-        {
-            /*
-             * TODO: Once audio component is implemented
-             * we must play the audio sound at this time.
-             */
-        }
+        AudioPlay(cpu->audio);
+    }
+    else
+    {
+        AudioStop(cpu->audio);
     }
 }
