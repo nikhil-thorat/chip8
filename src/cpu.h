@@ -1,0 +1,32 @@
+#pragma once
+
+#ifndef CPU
+#define CPU
+
+#include "display.h"
+#include "input.h"
+#include "memory.h"
+#include <stdint.h>
+
+typedef struct
+{
+    uint8_t V[16];
+    uint16_t IR;
+    uint16_t PC;
+
+    uint16_t stack[16];
+    uint8_t SP;
+
+    uint8_t delay_timer;
+    uint8_t sound_timer;
+
+    Memory *memory;
+    Display *display;
+    Input *input;
+} Cpu;
+
+void CpuInit(Cpu *cpu, Memory *memory, Display *display, Input *input);
+void CpuCycle(Cpu *cpu);
+void CpuTickTimers(Cpu *cpu);
+
+#endif /* CPU */
