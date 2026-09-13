@@ -1,12 +1,14 @@
 .SILENT:
 
+CC = clang
+CFLAGS = -Wall -O2
+
 build:
 	mkdir -p build
-	clang src/main.c -o ./build/chip8
+	$(CC) $(CFLAGS) ./src/*.c -o ./build/chip8
 
-run:
-	./build/chip8
+run: build
+	./build/chip8 $(ROM)
 
 clean:
-	rm -r ./build
-
+	rm -rf ./build
