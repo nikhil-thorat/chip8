@@ -1,6 +1,6 @@
 # CHIP8 Emulator
 
-![CHIP8 Logo]("https://github.com/nikhil-thorat/chip8/blob/main/assets/chip8.png")
+![CHIP8 Logo]("assets/chip8.png")
 
 A modular, terminal based CHIP8 emulator written entirely in C with zero external dependencies.
 
