@@ -2,6 +2,8 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <sys/ioctl.h>
+#include <unistd.h>
 
 void DisplayClear(Display *display)
 {
@@ -29,10 +31,37 @@ void DisplayRender(Display *display)
         return;
     }
 
+    struct winsize w;
+    ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
+
+    int pad_x = (w.ws_col - DISPLAY_WIDTH) / 2;
+    int pad_y = (w.ws_row - (DISPLAY_HEIGHT / 2)) / 2;
+
+    if (pad_x < 0)
+    {
+        pad_x = 0;
+    }
+
+    if (pad_y < 0)
+    {
+        pad_y = 0;
+    }
+
     printf("\e[1;1H\e[0m");
+
+    for (int i = 0; i < pad_y; i++)
+    {
+        printf("\e[K\n");
+    }
 
     for (int y = 0; y < DISPLAY_HEIGHT; y += 2)
     {
+        printf("\r");
+        if (pad_x > 0)
+        {
+            printf("\e[%dC", pad_x);
+        }
+
         for (int x = 0; x < DISPLAY_WIDTH; x++)
         {
             bool top_pixel = display->pixels[(y * DISPLAY_WIDTH) + x];
@@ -55,8 +84,10 @@ void DisplayRender(Display *display)
                 printf(" ");
             }
         }
-        printf("\r\n");
+        printf("\e[K\r\n");
     }
+
+    printf("\e[J");
 
     display->draw_flag = false;
     fflush(stdout);
